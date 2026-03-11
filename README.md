@@ -37,7 +37,7 @@ This project makes use of the manifest inside the minecraft mods in JAR format. 
 
 <img src=/src/imgs/graph_window_icon.svg alt="Graph icon" width=128>
 
-Go to the [official-url] to use this app!
+Go to the [official website][official-url] to use this app!
 
 Once you load your mods, you may notice the nodes have different colors depending on the connections they have. Not all colors appear by default; some are toggled by double-clicking the node. Here is how it works:
 
@@ -122,7 +122,7 @@ I also want to express my gratitude to the libraries that made this project poss
 
 [index-page-picture]: /src/imgs/index_window_icon.svg
 [graph-page-picture]: /src/imgs/graph_window_icon.svg
-[official-url]: https://blank
+[official-url]: https://arcbra.github.io/ModPack-Dependency-Visualizer/
 [buymeacoffe-url]: https://buymeacoffee.com/arcbaedlb
 [this-repo]: https://github.com/arcbra/ModPack-Dependency-Visualizer
 [HTML.js]: https://shields.io/badge/HTML5-E34F26?logo=HTML5&logoColor=FFF
