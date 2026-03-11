@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/src/style.css" />
+        <link
+            rel="icon"
+            type="image/png"
+            href="/src/imgs/index_window_icon.svg"
+        />
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Modpack Dependency Visualizer</title>
+    </head>
+
+    <body>
+        <a href="https://github.com/arcbra?tab=repositories" , target="_blank">
+            <img
+                src="/src/imgs/github_icon.svg"
+                alt="Github"
+                style="position: absolute; top: 20px; right: 20px; width: 50px"
+            />
+        </a>
+
+        <div class="container">
+            <h1>Modpack Dependency Visualizer</h1>
+
+            <label id="drop-zone">
+                Drop your .jar files here, or click to upload.
+                <input type="file" id="file-input" multiple accept=".jar" />
+            </label>
+            <ul id="file-list"></ul>
+
+            <div class="button-row" style="align-items: center">
+                <button id="submit-btn">Submit</button>
+                <button id="clear-btn">Clear</button>
+            </div>
+
+            <div id="progress-bar"></div>
+
+            <p
+                id="file-counter"
+                style="position: absolute; bottom: 2vh; right: 16vw"
+            ></p>
+        </div>
+        <a href="https://buymeacoffee.com/arcbaedlb" target="_blank">
+            <img
+                src="/src/imgs/buymeacoffe.svg"
+                alt="Buy me a coffe!"
+                style="
+                    position: absolute;
+                    width: 50px;
+                    bottom: 10px;
+                    right: 20px;
+                "
+            />
+        </a>
+
+        <script type="module" src="/src/load.ts"></script>
+    </body>
+</html>

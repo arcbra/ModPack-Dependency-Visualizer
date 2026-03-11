@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="icon"
+            type="image/png"
+            href="/src/imgs/graph_window_icon.svg"
+        />
+        <title>Dependency Graph</title>
+        <link rel="stylesheet" href="/src/style.css" />
+    </head>
+    <body>
+        <div id="graph"></div>
+
+        <div>
+            <p
+                id="node-count"
+                style="position: absolute; bottom: 0px; right: 10px"
+            ></p>
+        </div>
+        <div id="notifications"></div>
+
+        <div id="legend-container">
+            <img
+                id="node-legend-img"
+                src="/src/imgs/node_legend.svg"
+                alt="Node Legend"
+                style="
+                    position: absolute;
+                    width: 225px;
+                    top: 5px;
+                    transition: left 0.5s ease;
+                    visibility: hidden;
+                "
+            />
+            <button id="node-legend-arrow">
+                <img
+                    src="/src/imgs/node_legend_arrow.svg"
+                    id="node-legend-arrow-img"
+                    alt="Hide Legend"
+                    style="
+                        position: absolute;
+                        width: 40px;
+                        top: 15px;
+                        transition: left 0.5s ease;
+                        visibility: hidden;
+                    "
+                />
+            </button>
+        </div>
+
+        <script type="module" src="/src/graph.ts"></script>
+    </body>
+</html>
