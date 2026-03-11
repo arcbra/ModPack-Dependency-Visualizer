@@ -31,7 +31,7 @@ Don't you hate when you are making a modpack and after adding and removing mods 
 
 This project makes use of the manifest inside the minecraft mods in JAR format. This makes it possible to establish relations between the mods and generate a network graph, so you can clearly see which mods are left alone and how the connections are established. Here is an example of the Cobblemon ModPack [NeoForge]:
 
-<img src=/imgs/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
+<img src=/public/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
 
 ## Usage
 
@@ -41,16 +41,16 @@ Go to the [official-url] to use this app!
 
 Once you load your mods, you may notice the nodes have different colors depending on the connections they have. Not all colors appear by default; some are toggled by double-clicking the node. Here is how it works:
 
-- ${\color{blue}\text{Blue}}$ indicates this mod is a *Main* mod. This means arrows can only go from this mod to another, but not the other way around.
-- ${\color{orange}\text{Orange}}$ indicates this mod is a *Midpoint* mod. This means arrows can go from this mod to another and vice versa.
-- ${\color{Yellow}\text{Yellow}}$ indicates this mod is a *Dependency* mod. This means arrows can only go to this mod, but there are no arrows coming from this mod.
-- ${\color{purple}\text{Purple}}$ indicates this mod is a *Addon* mod. This is a toggle for non-orphan-only nodes. Really useful when working with mods with massive addons such as the Create mod.
-- ${\color{red}\text{Red}}$ indicates this mod is an *Orphan* mod. This means this mod doesn't have any sort of connections with other mods. This doesn't necessarily mean it's a useless dependency, so it may need to be checked out.
-- ${\color{green}\text{Green}}$ indicates this mod is a *Checked orphan* mod. This is a toggle for orphan-only nodes. Useful when checking out useless dependencies.
+- ${\color{blue}\text{Blue}}$ indicates this mod is a _Main_ mod. This means arrows can only go from this mod to another, but not the other way around.
+- ${\color{orange}\text{Orange}}$ indicates this mod is a _Midpoint_ mod. This means arrows can go from this mod to another and vice versa.
+- ${\color{Yellow}\text{Yellow}}$ indicates this mod is a _Dependency_ mod. This means arrows can only go to this mod, but there are no arrows coming from this mod.
+- ${\color{purple}\text{Purple}}$ indicates this mod is a _Addon_ mod. This is a toggle for non-orphan-only nodes. Really useful when working with mods with massive addons such as the Create mod.
+- ${\color{red}\text{Red}}$ indicates this mod is an _Orphan_ mod. This means this mod doesn't have any sort of connections with other mods. This doesn't necessarily mean it's a useless dependency, so it may need to be checked out.
+- ${\color{green}\text{Green}}$ indicates this mod is a _Checked orphan_ mod. This is a toggle for orphan-only nodes. Useful when checking out useless dependencies.
 
 Also, you can click any node and move it with its group around for organization. Finally, **you can right click any node to search it on CurseForge**, and read about it. If it's your first time loading the website, you'll be prompted with this little reminder:
 
-<img src=/imgs/clicks_notification.png alt="How clicks work" width=512>
+<img src=/public/clicks_notification.png alt="How clicks work" width=512>
 
 ## Limitations
 
