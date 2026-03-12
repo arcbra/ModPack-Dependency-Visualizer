@@ -327,5 +327,5 @@ submitBtn.addEventListener("click", async () => {
     sessionStorage.setItem("jarErrors", JSON.stringify(jarErrors));
     sessionStorage.setItem("modsRelation", JSON.stringify(modsRelation));
 
-    window.location.href = "/graph.html";
+    window.location.href = "graph.html";
 });
