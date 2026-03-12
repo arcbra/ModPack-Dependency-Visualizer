@@ -31,7 +31,7 @@ Don't you hate when you are making a modpack and after adding and removing mods 
 
 This project makes use of the manifest inside the minecraft mods in JAR format. This makes it possible to establish relations between the mods and generate a network graph, so you can clearly see which mods are left alone and how the connections are established. Here is an example of the Cobblemon ModPack [NeoForge]:
 
-<img src=/public/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
+<img src=/imgs/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
 
 ## Usage
 
@@ -50,7 +50,7 @@ Once you load your mods, you may notice the nodes have different colors dependin
 
 Also, you can click any node and move it with its group around for organization. Finally, **you can right click any node to search it on CurseForge**, and read about it. If it's your first time loading the website, you'll be prompted with this little reminder:
 
-<img src=/public/clicks_notification.png alt="How clicks work" width=512>
+<img src=/imgs/clicks_notification.png alt="How clicks work" width=512>
 
 ## Limitations
 
