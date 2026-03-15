@@ -21,11 +21,9 @@ interface NetworkAttributes {
 // Recover previous graph data if it was the same
 let nodes, edges;
 let nodesArray: Record<string, any>[] = JSON.parse(
-    sessionStorage.getItem("lastNodesArray") ?? "[]",
+    localStorage.getItem("lastNodesArray") ?? "[]",
 );
-let edgesRaw: Edge[] = JSON.parse(
-    sessionStorage.getItem("lastEdgesRaw") ?? "[]",
-);
+let edgesRaw: Edge[] = JSON.parse(localStorage.getItem("lastEdgesRaw") ?? "[]");
 
 // Notify errors
 /**
@@ -44,7 +42,7 @@ function notify(message: string, type = "error", duration = 10000) {
 }
 
 const jarErrors: string[] = JSON.parse(
-    sessionStorage.getItem("jarErrors") ?? "[]",
+    localStorage.getItem("jarErrors") ?? "[]",
 );
 jarErrors.map((err) => notify(err));
 
@@ -60,7 +58,7 @@ const groupAttributes: Record<string, GroupAttributes> = {
 const orphanClasses = new Set(Object.keys(groupAttributes).slice(-2));
 
 const modsRelation: Record<string, string[]> = JSON.parse(
-    sessionStorage.getItem("modsRelation") ?? "[]",
+    localStorage.getItem("modsRelation") ?? "[]",
 );
 const uniqueModsLoaded = new Set(
     Object.entries(modsRelation).flat(2),
@@ -84,7 +82,7 @@ const isPageFirstLoad = checkPageFirstLoad(uniqueModsLoaded, modsLastLoaded);
 
 if (isPageFirstLoad) {
     notify(
-        "Doble click a node to mark as an 'Addon' or a 'Checked orphan'.",
+        "Doble click a node to mark as an Addon or a Checked orphan.",
         "info",
         15000,
     );
@@ -93,7 +91,6 @@ if (isPageFirstLoad) {
         "info",
         15000,
     );
-
     const nodeSet: Set<string> = new Set();
 
     edgesRaw = [];
@@ -171,7 +168,11 @@ const network = new Network(
         nodes: {
             shape: "dot",
             size: 30,
-            font: { size: 18, color: "#ffffffe8", face: "Mojangles" },
+            font: {
+                size: 10,
+                color: "#ffffffe8",
+                face: "Mojangles",
+            },
             borderWidth: 3,
             shadow: { enabled: true, size: 10, color: "#00000080" },
             color: {
@@ -257,9 +258,9 @@ const lastNodesData = (nodes: DataSet<any, any>) =>
 
 window.addEventListener("beforeunload", () => {
     network.storePositions();
-    sessionStorage.setItem(
+    localStorage.setItem(
         "lastNodesArray",
         JSON.stringify(lastNodesData(nodes)),
     );
-    sessionStorage.setItem("lastEdgesRaw", JSON.stringify(edgesRaw));
+    localStorage.setItem("lastEdgesRaw", JSON.stringify(edgesRaw));
 });

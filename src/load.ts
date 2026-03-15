@@ -257,6 +257,7 @@ clearBtn.addEventListener("click", () => {
     fileInput.value = "";
     allFiles = [];
     updateFileList([]);
+    document.location.reload();
 });
 
 submitBtn.addEventListener("click", async () => {
@@ -305,8 +306,8 @@ submitBtn.addEventListener("click", async () => {
     const excludeExtraDep = (dep: string) => extraDependencies[dep] ?? dep;
     const resolveDep = (key: string, deps: string[]) => {
         const filteredDep = deps.filter((dep) => !defaultDependencies.has(dep));
-        const mappedDep = filteredDep.map(
-            (dep) => modsIdToDisplayName[excludeExtraDep(dep)] ?? dep,
+        const mappedDep = filteredDep.map((dep) =>
+            (modsIdToDisplayName[excludeExtraDep(dep)] ?? dep).replace("'", ""),
         );
         const resolvedDep = mappedDep.filter((dep) => key !== dep);
         return resolvedDep;
@@ -315,7 +316,7 @@ submitBtn.addEventListener("click", async () => {
     const modsRelation = Object.entries(modsRelationRaw).reduce(
         (acc, [key, deps]) => {
             if (defaultDependencies.has(key)) return acc;
-            const newKey = modsIdToDisplayName[key] ?? key;
+            const newKey = (modsIdToDisplayName[key] ?? key).replace("'", "");
             const newVals = [...new Set(resolveDep(newKey, deps))];
 
             acc[newKey] = newVals;
@@ -324,8 +325,8 @@ submitBtn.addEventListener("click", async () => {
         {} as Record<string, string[]>,
     );
 
-    sessionStorage.setItem("jarErrors", JSON.stringify(jarErrors));
-    sessionStorage.setItem("modsRelation", JSON.stringify(modsRelation));
+    localStorage.setItem("jarErrors", JSON.stringify(jarErrors));
+    localStorage.setItem("modsRelation", JSON.stringify(modsRelation));
 
     window.location.href = "graph.html";
 });

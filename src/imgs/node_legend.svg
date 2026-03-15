@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="100%" height="100%" viewBox="0 0 303 328" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+
+<svg width="100%" height="100%" viewBox="0 0 303 328" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/"
+    style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <style>
+        @font-face {
+            font-family: "Mojangles";
+            src:
+                url("data:font/woff2;charset=utf-8;base64,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") format("woff2"),
+                font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        text {
+            font-family: "Mojangles";
+            font-size: 11px !important;
+        }
+    </style>
     <g transform="matrix(1.001156,0,0,1.020893,-5.975258,-6.852989)">
-        <path d="M303,35.2L303,299.5C303,315.2 290,328 273.9,328L41.3,328C25.2,328 12.2,315.2 12.2,299.5L12.2,35.2C12.2,19.5 25.2,6.7 41.3,6.7L273.9,6.7C290,6.7 303,19.5 303,35.2Z" style="fill:rgb(42,42,75);"/>
+        <path
+            d="M303,35.2L303,299.5C303,315.2 290,328 273.9,328L41.3,328C25.2,328 12.2,315.2 12.2,299.5L12.2,35.2C12.2,19.5 25.2,6.7 41.3,6.7L273.9,6.7C290,6.7 303,19.5 303,35.2Z"
+            style="fill:rgb(42,42,75);" />
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,-24.466047)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(2,160,255);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(2,160,255);" />
     </g>
     <g transform="matrix(1,0,0,1,22.163564,60.499997)">
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Midpoint</text>
@@ -14,30 +34,30 @@
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Main</text>
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,24.809763)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(255,136,0);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(255,136,0);" />
     </g>
     <g transform="matrix(1,0,0,1,22.163564,109.999997)">
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Dependency</text>
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,74.085573)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(255,208,8);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(255,208,8);" />
     </g>
     <g transform="matrix(1,0,0,1,22.163564,159.499996)">
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Addon</text>
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,123.361382)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(199,164,243);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(199,164,243);" />
     </g>
     <g transform="matrix(1,0,0,1,22.163564,208.999995)">
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Orphan</text>
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,172.637192)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(236,36,14);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(236,36,14);" />
     </g>
     <g transform="matrix(1,0,0,1,22.163564,258.499994)">
         <text x="56.7px" y="35px" style="font-family:'Mojangles';font-size:21.3px;fill:white;">Checked orphan</text>
     </g>
     <g transform="matrix(1.033911,0,0,1.033911,10.698317,221.913002)">
-        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(46,204,113);"/>
+        <circle cx="35.8" cy="62" r="15.1" style="fill:rgb(46,204,113);" />
     </g>
 </svg>

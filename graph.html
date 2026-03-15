@@ -7,8 +7,15 @@
             type="image/png"
             href="src/imgs/graph_window_icon.svg"
         />
-        <title>Dependency Graph</title>
         <link rel="stylesheet" href="src/style.css" />
+        <style>
+            body {
+                overflow: hidden;
+            }
+        </style>
+
+        <script type="module" src="src/graph.ts"></script>
+        <title>Dependency Graph</title>
     </head>
     <body>
         <div id="graph"></div>
@@ -16,7 +23,7 @@
         <div>
             <p
                 id="node-count"
-                style="position: absolute; bottom: 0px; right: 10px"
+                style="position: fixed; bottom: 0px; right: 10px"
             ></p>
         </div>
         <div id="notifications"></div>
@@ -49,7 +56,5 @@
                 />
             </button>
         </div>
-
-        <script type="module" src="src/graph.ts"></script>
     </body>
 </html>

@@ -33,7 +33,7 @@ function defineLegend(isVisible: boolean) {
     Object.assign(legendArrowImg.style, {
         left: legendArrowPos[visibilityState],
         visibility: "visible",
-        transform: isVisible ? "rotate(0deg)" : "rotate(180deg)",
+        transform: isVisible ? "rotate(180deg)" : "rotate(0deg)",
     });
 }
 
