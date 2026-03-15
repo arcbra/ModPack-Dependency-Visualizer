@@ -6,11 +6,17 @@
             rel="icon"
             type="image/png"
             href="/ModPack-Dependency-Visualizer/assets/graph_window_icon-CU7KuODm.svg"
-        />
-        <title>Dependency Graph</title>
-      <script type="module" crossorigin src="/ModPack-Dependency-Visualizer/assets/nested-D0cIhaBx.js"></script>
-      <link rel="modulepreload" crossorigin href="/ModPack-Dependency-Visualizer/assets/style-BnvDl2rl.js">
-      <link rel="stylesheet" crossorigin href="/ModPack-Dependency-Visualizer/assets/style-DfYnk2y4.css">
+        />
+        <style>
+            body {
+                overflow: hidden;
+            }
+        </style>
+
+        <title>Dependency Graph</title>
+      <script type="module" crossorigin src="/ModPack-Dependency-Visualizer/assets/nested-ButcKECG.js"></script>
+      <link rel="modulepreload" crossorigin href="/ModPack-Dependency-Visualizer/assets/style-DWcwq3RW.js">
+      <link rel="stylesheet" crossorigin href="/ModPack-Dependency-Visualizer/assets/style-2LR2WKR5.css">
     </head>
     <body>
         <div id="graph"></div>
@@ -18,7 +24,7 @@
         <div>
             <p
                 id="node-count"
-                style="position: absolute; bottom: 0px; right: 10px"
+                style="position: fixed; bottom: 0px; right: 10px"
             ></p>
         </div>
         <div id="notifications"></div>
@@ -26,7 +32,7 @@
         <div id="legend-container">
             <img
                 id="node-legend-img"
-                src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+DQo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPg0KPHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB2aWV3Qm94PSIwIDAgMzAzIDMyOCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxuczpzZXJpZj0iaHR0cDovL3d3dy5zZXJpZi5jb20vIiBzdHlsZT0iZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS1taXRlcmxpbWl0OjI7Ij4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAwMTE1NiwwLDAsMS4wMjA4OTMsLTUuOTc1MjU4LC02Ljg1Mjk4OSkiPg0KICAgICAgICA8cGF0aCBkPSJNMzAzLDM1LjJMMzAzLDI5OS41QzMwMywzMTUuMiAyOTAsMzI4IDI3My45LDMyOEw0MS4zLDMyOEMyNS4yLDMyOCAxMi4yLDMxNS4yIDEyLjIsMjk5LjVMMTIuMiwzNS4yQzEyLjIsMTkuNSAyNS4yLDYuNyA0MS4zLDYuN0wyNzMuOSw2LjdDMjkwLDYuNyAzMDMsMTkuNSAzMDMsMzUuMloiIHN0eWxlPSJmaWxsOnJnYig0Miw0Miw3NSk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEuMDMzOTExLDAsMCwxLjAzMzkxMSwxMC42OTgzMTcsLTI0LjQ2NjA0NykiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIzNS44IiBjeT0iNjIiIHI9IjE1LjEiIHN0eWxlPSJmaWxsOnJnYigyLDE2MCwyNTUpOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDIyLjE2MzU2NCw2MC40OTk5OTcpIj4NCiAgICAgICAgPHRleHQgeD0iNTYuN3B4IiB5PSIzNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vamFuZ2xlcyc7Zm9udC1zaXplOjIxLjNweDtmaWxsOndoaXRlOyI+TWlkcG9pbnQ8L3RleHQ+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMjIuMTYzNTY0LDEwLjk5OTk5OCkiPg0KICAgICAgICA8dGV4dCB4PSI1Ni43cHgiIHk9IjM1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9qYW5nbGVzJztmb250LXNpemU6MjEuM3B4O2ZpbGw6d2hpdGU7Ij5NYWluPC90ZXh0Pg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAzMzkxMSwwLDAsMS4wMzM5MTEsMTAuNjk4MzE3LDI0LjgwOTc2MykiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIzNS44IiBjeT0iNjIiIHI9IjE1LjEiIHN0eWxlPSJmaWxsOnJnYigyNTUsMTM2LDApOyIvPg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLDAsMCwxLDIyLjE2MzU2NCwxMDkuOTk5OTk3KSI+DQogICAgICAgIDx0ZXh0IHg9IjU2LjdweCIgeT0iMzVweCIgc3R5bGU9ImZvbnQtZmFtaWx5OidNb2phbmdsZXMnO2ZvbnQtc2l6ZToyMS4zcHg7ZmlsbDp3aGl0ZTsiPkRlcGVuZGVuY3k8L3RleHQ+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEuMDMzOTExLDAsMCwxLjAzMzkxMSwxMC42OTgzMTcsNzQuMDg1NTczKSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjM1LjgiIGN5PSI2MiIgcj0iMTUuMSIgc3R5bGU9ImZpbGw6cmdiKDI1NSwyMDgsOCk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMjIuMTYzNTY0LDE1OS40OTk5OTYpIj4NCiAgICAgICAgPHRleHQgeD0iNTYuN3B4IiB5PSIzNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vamFuZ2xlcyc7Zm9udC1zaXplOjIxLjNweDtmaWxsOndoaXRlOyI+QWRkb248L3RleHQ+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEuMDMzOTExLDAsMCwxLjAzMzkxMSwxMC42OTgzMTcsMTIzLjM2MTM4MikiPg0KICAgICAgICA8Y2lyY2xlIGN4PSIzNS44IiBjeT0iNjIiIHI9IjE1LjEiIHN0eWxlPSJmaWxsOnJnYigxOTksMTY0LDI0Myk7Ii8+DQogICAgPC9nPg0KICAgIDxnIHRyYW5zZm9ybT0ibWF0cml4KDEsMCwwLDEsMjIuMTYzNTY0LDIwOC45OTk5OTUpIj4NCiAgICAgICAgPHRleHQgeD0iNTYuN3B4IiB5PSIzNXB4IiBzdHlsZT0iZm9udC1mYW1pbHk6J01vamFuZ2xlcyc7Zm9udC1zaXplOjIxLjNweDtmaWxsOndoaXRlOyI+T3JwaGFuPC90ZXh0Pg0KICAgIDwvZz4NCiAgICA8ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLjAzMzkxMSwwLDAsMS4wMzM5MTEsMTAuNjk4MzE3LDE3Mi42MzcxOTIpIj4NCiAgICAgICAgPGNpcmNsZSBjeD0iMzUuOCIgY3k9IjYyIiByPSIxNS4xIiBzdHlsZT0iZmlsbDpyZ2IoMjM2LDM2LDE0KTsiLz4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMSwwLDAsMSwyMi4xNjM1NjQsMjU4LjQ5OTk5NCkiPg0KICAgICAgICA8dGV4dCB4PSI1Ni43cHgiIHk9IjM1cHgiIHN0eWxlPSJmb250LWZhbWlseTonTW9qYW5nbGVzJztmb250LXNpemU6MjEuM3B4O2ZpbGw6d2hpdGU7Ij5DaGVja2VkIG9ycGhhbjwvdGV4dD4NCiAgICA8L2c+DQogICAgPGcgdHJhbnNmb3JtPSJtYXRyaXgoMS4wMzM5MTEsMCwwLDEuMDMzOTExLDEwLjY5ODMxNywyMjEuOTEzMDAyKSI+DQogICAgICAgIDxjaXJjbGUgY3g9IjM1LjgiIGN5PSI2MiIgcj0iMTUuMSIgc3R5bGU9ImZpbGw6cmdiKDQ2LDIwNCwxMTMpOyIvPg0KICAgIDwvZz4NCjwvc3ZnPg0K"
+                src="/ModPack-Dependency-Visualizer/assets/node_legend-nEfo85a0.svg"
                 alt="Node Legend"
                 style="
                     position: absolute;
@@ -51,6 +57,5 @@
                 />
             </button>
         </div>
-
     </body>
 </html>
