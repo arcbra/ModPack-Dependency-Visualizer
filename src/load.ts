@@ -125,7 +125,7 @@ async function processForgeLikeManifest(
         manifest.dependencies?.[modInfo.modId] ?? [];
 
     modsRelationRaw[depId] = depValuesRaw
-        .filter((dep) => dep.type === "required" || dep.mandatory)
+        .filter((dep) => dep.type.toLowerCase() === "required" || dep.mandatory)
         .map((dep) => dep.modId);
 
     modsIdToDisplayName[depId] = modInfo.displayName;
