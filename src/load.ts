@@ -44,6 +44,33 @@ function updateFileList(newFiles: FileList | []) {
 }
 
 /**
+ * Parse the manifest in string format before parsing with TOML or JSON.
+ * @param jarFile current JAR.
+ * @param isForgeLike boolean that checks if the manifest is Neo/Forge or Fabric.
+ * @returns The complete manifest in string format.
+ */
+async function parseTextManifest(jarFile: JSZipObject, isForgeLike: boolean) {
+    let manifestText;
+    if (isForgeLike) {
+        const HEADER_BAD_FORMAT = /^\[[^\[](.+\n)+]?/gm;
+        const DESCRIPTION_BAD_FORMAT = /description='''([\s\S]*?)'''/gm;
+
+        manifestText = (await jarFile.async("text"))
+            .replaceAll(DESCRIPTION_BAD_FORMAT, "")
+            .replaceAll(HEADER_BAD_FORMAT, "");
+    } else {
+        const DESCRIPTION_BAD_FORMAT = /"description"\s?:\s?".+?",/gs;
+
+        manifestText = (await jarFile.async("text")).replaceAll(
+            DESCRIPTION_BAD_FORMAT,
+            "",
+        );
+    }
+
+    return manifestText;
+}
+
+/**
  * Process the Fabric manifest and saves the data on modsRelationRaw.
  * @param fabricFile Corresponding Fabric manifest.
  * @param fileName Name of the current JAR.
@@ -57,11 +84,7 @@ async function processFabricManifest(
     lastMainMod: string | null = null,
     isMainMod: boolean = true,
 ) {
-    const MANIFEST_FABRIC_BAD_FORMAT = /"description"\s?:\s?".+?",/gs;
-    const manifestTextFabric = (await fabricFile.async("text")).replaceAll(
-        MANIFEST_FABRIC_BAD_FORMAT,
-        "",
-    );
+    const manifestTextFabric = await parseTextManifest(fabricFile, false);
 
     let manifest;
     try {
@@ -101,10 +124,7 @@ async function processForgeLikeManifest(
     lastMainMod: string | null = null,
     isMainMod: boolean = true,
 ) {
-    const MANIFEST_FORGE_LIKE_BAD_FORMAT = /^\[[^\[](.+\n)+]?/gm;
-    const manifestTextForgeLike = (
-        await forgeLikeFile.async("text")
-    ).replaceAll(MANIFEST_FORGE_LIKE_BAD_FORMAT, "");
+    let manifestTextForgeLike = await parseTextManifest(forgeLikeFile, true);
 
     let manifest;
     try {
@@ -142,7 +162,7 @@ async function processForgeLikeManifest(
  * @param isMainMod Checks if the current JAR is a main mod.
  * @returns Type (Fabric or ForgeLike) and filepath.
  */
-function getManifestInfo(
+async function getManifestInfo(
     matches: JSZipObject[],
     zip: JSZip,
     fileName: string,
@@ -165,7 +185,17 @@ function getManifestInfo(
         }
         return [false, fabricFile];
     }
-    return [true, matches[0]];
+
+    let forgeFile = matches[0];
+    if (matches.length === 2) {
+        const manifestText = await parseTextManifest(forgeFile, true);
+        try {
+            TOML.parse(manifestText);
+        } catch {
+            forgeFile = matches[1];
+        }
+    }
+    return [true, forgeFile];
 }
 
 /**
@@ -188,12 +218,12 @@ async function processFile(
             : await file.async("arraybuffer");
     const zip = await JSZip.loadAsync(buffer);
     const manifestMatches = zip.file(MANIFEST_FILENAME_PATTERN);
-    const [isForgeLike, manifestFile] = (getManifestInfo(
+    const [isForgeLike, manifestFile] = ((await getManifestInfo(
         manifestMatches,
         zip,
         file.name,
         isMainMod,
-    ) ?? []) as [boolean, JSZipObject];
+    )) ?? []) as [boolean, JSZipObject];
 
     if (typeof isForgeLike !== "undefined") {
         const newMainMod = isForgeLike
