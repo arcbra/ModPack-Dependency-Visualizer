@@ -265,6 +265,13 @@ async function mainProcess(file: File) {
 }
 
 // EventListeners
+//// Reload going back
+window.addEventListener("pageshow", (e) => {
+    if (e.persisted) {
+        document.location.reload();
+    }
+});
+
 //// File list
 document.addEventListener("files-dropped", (e) => {
     const newCustomEvent = e as CustomEvent;
