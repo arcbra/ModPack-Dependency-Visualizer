@@ -238,9 +238,11 @@ network.on("oncontext", ({ pointer, event }) => {
     const nodeId = network.getNodeAt(pointer.DOM);
     if (nodeId) {
         event?.preventDefault();
-        window.open(
-            `https://www.curseforge.com/minecraft/mc-mods/search?page=1&pageSize=20&sortBy=relevancy&class=mc-mods&search=${nodeId}`,
-        );
+        searchInCurseForge
+            ? window.open(
+                  `https://www.curseforge.com/minecraft/mc-mods/search?page=1&pageSize=20&sortBy=relevancy&class=mc-mods&search=${nodeId}`,
+              )
+            : window.open(`https://modrinth.com/discover/mods?q=${nodeId}`);
     }
 });
 
@@ -251,6 +253,31 @@ const nodeCountElem = document.getElementById(
 nodeCountElem.appendChild(
     document.createTextNode(`Total Nodes: ${nodes.length}`),
 );
+
+// Choose search engine
+let searchInCurseForge = true;
+const searchEngineBtn = document.getElementById(
+    "search-motor-btn",
+) as HTMLButtonElement;
+const curseForgeBtnImg = document.getElementById(
+    "curseforge-btn-img",
+) as HTMLImageElement;
+const modrinthBtnImg = document.getElementById(
+    "modrinth-btn-img",
+) as HTMLImageElement;
+
+Object.assign(curseForgeBtnImg.style, { visibility: "visible" }); //////////////
+
+searchEngineBtn.addEventListener("click", () => {
+    searchInCurseForge = !searchInCurseForge;
+    if (searchInCurseForge) {
+        Object.assign(curseForgeBtnImg.style, { visibility: "visible" });
+        Object.assign(modrinthBtnImg.style, { visibility: "hidden" });
+    } else {
+        Object.assign(curseForgeBtnImg.style, { visibility: "hidden" });
+        Object.assign(modrinthBtnImg.style, { visibility: "visible" });
+    }
+});
 
 // Save data on unload
 const lastNodesData = (nodes: DataSet<any, any>) =>
