@@ -255,7 +255,11 @@ nodeCountElem.appendChild(
 );
 
 // Choose search engine
-let searchInCurseForge = true;
+let searchInCurseForge = JSON.parse(
+    localStorage.getItem("lastSearchInCurseForge") ?? "true",
+);
+
+//// Buttons
 const searchEngineBtn = document.getElementById(
     "search-motor-btn",
 ) as HTMLButtonElement;
@@ -266,17 +270,53 @@ const modrinthBtnImg = document.getElementById(
     "modrinth-btn-img",
 ) as HTMLImageElement;
 
-Object.assign(curseForgeBtnImg.style, { visibility: "visible" }); //////////////
+const searchIndicatorPosition = {
+    visible: "5px",
+    hidden: "-50%",
+};
+
+/**
+ * Updates which button should show when choosing a search engine for the mods.
+ * @param searchInCurseForge Boolean that indicates if the user wants to search on CurseForge or not (Modrinth).
+ * @param initiation Checks if it's the first time loading the page.
+ */
+function updateIndicatorPosition(
+    searchInCurseForge: boolean,
+    initiation = false,
+) {
+    const [curseLeft, modrinthLeft] = searchInCurseForge
+        ? [searchIndicatorPosition.visible, searchIndicatorPosition.hidden]
+        : [searchIndicatorPosition.hidden, searchIndicatorPosition.visible];
+
+    Object.assign(curseForgeBtnImg.style, {
+        left: curseLeft,
+        visibility: initiation
+            ? searchInCurseForge
+                ? "visible"
+                : "hidden"
+            : "visible",
+    });
+    Object.assign(modrinthBtnImg.style, {
+        left: modrinthLeft,
+        visibility: initiation
+            ? searchInCurseForge
+                ? "hidden"
+                : "visible"
+            : "visible",
+    });
+}
+
+//// Initiation
+updateIndicatorPosition(searchInCurseForge, true);
 
 searchEngineBtn.addEventListener("click", () => {
     searchInCurseForge = !searchInCurseForge;
-    if (searchInCurseForge) {
-        Object.assign(curseForgeBtnImg.style, { visibility: "visible" });
-        Object.assign(modrinthBtnImg.style, { visibility: "hidden" });
-    } else {
-        Object.assign(curseForgeBtnImg.style, { visibility: "hidden" });
-        Object.assign(modrinthBtnImg.style, { visibility: "visible" });
-    }
+    updateIndicatorPosition(searchInCurseForge);
+
+    localStorage.setItem(
+        "lastSearchInCurseForge",
+        JSON.stringify(searchInCurseForge),
+    );
 });
 
 // Save data on unload
