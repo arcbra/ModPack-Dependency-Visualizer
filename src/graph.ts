@@ -18,6 +18,13 @@ interface NetworkAttributes {
     checked: boolean;
 }
 
+// History
+type Action =
+    | { type: "addEdge"; edge: Edge }
+    | { type: "removeEdge"; edge: Edge };
+
+const history: Action[] = [];
+
 // Recover previous graph data if it was the same
 let nodes, edges;
 let nodesArray: Record<string, any>[] = JSON.parse(
@@ -158,7 +165,7 @@ if (isPageFirstLoad) {
 }
 
 nodes = new DataSet(nodesArray);
-edges = new DataSet(edgesRaw);
+edges = new DataSet([...new Set(edgesRaw)]);
 
 const container = document.getElementById("graph") as HTMLDivElement;
 const network = new Network(
@@ -200,8 +207,107 @@ const network = new Network(
             hover: true,
             dragNodes: true,
         },
+        manipulation: {
+            enabled: false,
+            addEdge: (
+                edgeData: Edge,
+                callback: (data: Edge | null) => void,
+            ) => {
+                if (edgeData.from === edgeData.to) return;
+
+                // Avoid duplicates
+                const existsConnection = edgesRaw.some(
+                    (e) => e.from === edgeData.from && e.to === edgeData.to,
+                );
+                if (existsConnection) return;
+
+                edgesRaw.push({ from: edgeData.from, to: edgeData.to });
+                history.push({ type: "addEdge", edge: { ...edgeData } });
+                callback(edgeData);
+                network.addEdgeMode(); // Stay on edit mode
+            },
+        },
     },
 );
+
+// Manual Edit Mode
+//// Buttons & Images
+let editModeActive = false;
+const editModeBtn = document.getElementById(
+    "edit-mode-btn",
+) as HTMLButtonElement;
+const editModeImg = document.getElementById(
+    "edit-mode-img",
+) as HTMLImageElement;
+const viewModeImg = document.getElementById(
+    "view-mode-img",
+) as HTMLImageElement;
+
+const modeIndicatorPosition = {
+    visible: "10px",
+    hidden: "-50%",
+};
+
+editModeBtn.addEventListener("click", () => {
+    editModeActive = !editModeActive;
+    editModeBtn.classList.toggle("active", editModeActive);
+    editModeActive ? network.addEdgeMode() : network.disableEditMode();
+
+    if (editModeActive) {
+        editModeImg.style.right = modeIndicatorPosition.visible;
+        viewModeImg.style.right = modeIndicatorPosition.hidden;
+    } else {
+        editModeImg.style.right = modeIndicatorPosition.hidden;
+        viewModeImg.style.right = modeIndicatorPosition.visible;
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Delete") {
+        const selectedEdges = network.getSelectedEdges();
+        if (selectedEdges.length === 0) return;
+
+        selectedEdges.forEach((id) => {
+            const edge = edges.get(id) as Edge;
+            history.push({ type: "removeEdge", edge: { ...edge } }); // 👈
+        });
+
+        edges.remove(selectedEdges);
+        edgesRaw = edgesRaw.filter(
+            (e) => !selectedEdges.includes(e.id as string),
+        );
+        if (editModeActive) network.addEdgeMode();
+        return;
+    }
+    if (e.key === "z" && e.ctrlKey) {
+        e.preventDefault();
+        const last = history.pop();
+
+        if (!last) return;
+
+        // If an Edge was deleted
+        if (last.type === "removeEdge") {
+            edgesRaw.push({ from: last.edge.from, to: last.edge.to });
+            edges.add(last.edge);
+            return;
+        }
+
+        // If it was an added Edge
+        const edge = edges.get({
+            filter: (e) => e.from === last.edge.from && e.to === last.edge.to,
+        });
+        if (!edge.length) return;
+
+        edges.remove(edge[0].id as string);
+        edgesRaw = edgesRaw.filter(
+            (e) => !(e.from === last.edge.from && e.to === last.edge.to),
+        );
+        if (editModeActive) {
+            // Avoid exiting Edit Mode
+            setTimeout(() => network.addEdgeMode(), 0);
+        }
+    }
+});
 
 // On double click
 network.on("doubleClick", ({ nodes: clicked }) => {
@@ -259,7 +365,7 @@ let searchInCurseForge = JSON.parse(
     localStorage.getItem("lastSearchInCurseForge") ?? "true",
 );
 
-//// Buttons
+//// Buttons & Images
 const searchEngineBtn = document.getElementById(
     "search-motor-btn",
 ) as HTMLButtonElement;
@@ -284,26 +390,27 @@ function updateIndicatorPosition(
     searchInCurseForge: boolean,
     initiation = false,
 ) {
+    if (initiation) {
+        if (searchInCurseForge) {
+            curseForgeBtnImg.style.visibility = "visible";
+            setTimeout(
+                () => (modrinthBtnImg.style.visibility = "visible"),
+                100,
+            );
+        } else {
+            modrinthBtnImg.style.visibility = "visible";
+            setTimeout(
+                () => (curseForgeBtnImg.style.visibility = "visible"),
+                100,
+            );
+        }
+    }
     const [curseLeft, modrinthLeft] = searchInCurseForge
         ? [searchIndicatorPosition.visible, searchIndicatorPosition.hidden]
         : [searchIndicatorPosition.hidden, searchIndicatorPosition.visible];
 
-    Object.assign(curseForgeBtnImg.style, {
-        left: curseLeft,
-        visibility: initiation
-            ? searchInCurseForge
-                ? "visible"
-                : "hidden"
-            : "visible",
-    });
-    Object.assign(modrinthBtnImg.style, {
-        left: modrinthLeft,
-        visibility: initiation
-            ? searchInCurseForge
-                ? "hidden"
-                : "visible"
-            : "visible",
-    });
+    curseForgeBtnImg.style.left = curseLeft;
+    modrinthBtnImg.style.left = modrinthLeft;
 }
 
 //// Initiation

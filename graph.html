@@ -60,6 +60,8 @@
             <button id="search-motor-btn">
                 <img
                     id="curseforge-btn-img"
+                    src="src/imgs/curseforge_indicator.svg"
+                    alt="Search Engine Indicator"
                     style="
                         position: fixed;
                         bottom: 0px;
@@ -68,11 +70,11 @@
                         transition: left 0.5s ease;
                         visibility: hidden;
                     "
-                    src="src/imgs/curseforge_indicator.svg"
-                    alt="Search Engine Indicator"
                 />
                 <img
                     id="modrinth-btn-img"
+                    src="src/imgs/modrinth_indicator.svg"
+                    alt="Search Engine Indicator"
                     style="
                         position: fixed;
                         bottom: 0px;
@@ -81,8 +83,35 @@
                         transition: left 0.5s ease;
                         visibility: hidden;
                     "
-                    src="src/imgs/modrinth_indicator.svg"
-                    alt="Search Engine Indicator"
+                />
+            </button>
+        </div>
+
+        <div>
+            <button id="edit-mode-btn">
+                <img
+                    src="src/imgs/view_mode.svg"
+                    id="view-mode-img"
+                    alt="View Mode"
+                    style="
+                        position: fixed;
+                        top: 5px;
+                        right: 10px;
+                        width: 60px;
+                        transition: right 0.5s ease;
+                    "
+                />
+                <img
+                    src="src/imgs/edit_mode.svg"
+                    id="edit-mode-img"
+                    alt="Edit Mode"
+                    style="
+                        position: fixed;
+                        top: 5px;
+                        right: -50%;
+                        width: 60px;
+                        transition: right 0.5s ease;
+                    "
                 />
             </button>
         </div>
