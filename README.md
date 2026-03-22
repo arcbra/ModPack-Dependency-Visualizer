@@ -62,7 +62,7 @@ In this mode instead of moving a node around when clicking on it, you can draw a
 
 You can always press **_Ctrl + Z_** to undo your changes, either adding or deleting an arrow!
 
-![](/showcase/edit_mode.mp4)
+![](/showcase/edit_mode.gif)
 
 ## Roadmap
 
