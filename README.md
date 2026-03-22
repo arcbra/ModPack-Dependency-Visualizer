@@ -31,7 +31,7 @@ Don't you hate when you are making a modpack and after adding and removing mods 
 
 This project makes use of the manifest inside the minecraft mods in JAR format. This makes it possible to establish relations between the mods and generate a network graph, so you can clearly see which mods are left alone and how the connections are established. Here is an example of the Cobblemon ModPack [NeoForge]:
 
-<img src=/imgs/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
+<img src=/showcase/cobblemon_neoforge.png alt="Cobblemon ModPack Graph">
 
 ## Usage
 
@@ -50,19 +50,29 @@ Once you load your mods, you may notice the nodes have different colors dependin
 
 Also, you can click any node and move it with its group around for organization. Finally, **you can right click any node to search it on CurseForge**, and read about it. If it's your first time loading the website, you'll be prompted with this little reminder:
 
-<img src=/imgs/clicks_notification.png alt="How clicks work" width=512>
+<img src=/showcase/clicks_notification.png alt="How clicks work" width=512>
 
-## Limitations
+## New feature!
 
-The manifest used to describe all the mod components in any format was standardized in Minecraft version 1.14. So **if your modpack is in a version lower than 1.14, this tool may not work properly!**
+<img src=/src/imgs/edit_mode.svg alt="Edit Mode" width=128>
 
-## Further Work
+Now you can enter **_Edit Mode_**, which allows you to connect nodes manually and modify relations between them! By default, the graph view will open in _View Mode_, which allows moving around and repositioning the nodes. You can change to _Edit Mode_ by clicking the top right button.
 
+In this mode instead of moving a node around when clicking on it, you can draw arrows from that node to another. Also, selecting an arrow and pressing the **_Delete key_**, will remove the selected arrow (this works in both modes). If you select a node instead, it'll delete all arrows related to that node.
+
+You can always press **_Ctrl + Z_** to undo your changes, either adding or deleting an arrow!
+
+![](/showcase/edit_mode.mp4)
+
+## Roadmap
+
+- [x] Base release.
 - [x] Add the ability to mark orphan nodes as checked orphans.
 - [x] Add the ability to mark non-orphan nodes if they are addons.
-- [x] Search the mods on CurseForge from the nodes.
-- [ ] Add an option to save the graph as a file.
-- [ ] Add an option to load a graph from a file.
+- [x] Search the mods on CurseForge / Modrinth from the nodes.
+- [x] Edit mode for connecting nodes manually and modify relations.
+- [x] Ability to undo changes on edit mode, either adding an arrow or removing one.
+- [ ] Add an option to save the graph as a file and load it later.
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
@@ -100,6 +110,10 @@ You can contact me on my email arcbaedl@gmail.com.
 Project Link: [arcbra/ModPack-Dependency-Visualizer][this-repo].
 
 <!-- ACKNOWLEDGMENTS -->
+
+## Current limitations
+
+The manifest used to describe all the mod components in any format was standardized in Minecraft version 1.14. So **if your modpack is in a version lower than 1.14, this tool may not work properly!**
 
 ## Built With
 
