@@ -52,12 +52,39 @@ function updateFileList(newFiles: FileList | []) {
 async function parseTextManifest(jarFile: JSZipObject, isForgeLike: boolean) {
     let manifestText;
     if (isForgeLike) {
-        const HEADER_BAD_FORMAT = /^\[[^\[](.+\n)+]?/gm;
+        const HEADER_BAD_FORMAT = /^\[[^\[][\s\S]*?\]/gm;
         const DESCRIPTION_BAD_FORMAT = /description='''([\s\S]*?)'''/gm;
 
-        manifestText = (await jarFile.async("text"))
-            .replaceAll(DESCRIPTION_BAD_FORMAT, "")
-            .replaceAll(HEADER_BAD_FORMAT, "");
+        manifestText = (await jarFile.async("text")).replaceAll(
+            DESCRIPTION_BAD_FORMAT,
+            "",
+        );
+
+        const manifestTextLines = manifestText.split("\n");
+        const badLineRanges = [];
+        let badLineStart;
+        for (const [i, line] of manifestTextLines.entries()) {
+            if (line.match(HEADER_BAD_FORMAT)) {
+                badLineStart = i;
+            }
+
+            if (typeof badLineStart === "undefined") continue;
+
+            const isBlankLine = line.trim().length === 0;
+            const isLastLine = i === line.length - 1;
+            if (isBlankLine || isLastLine) {
+                badLineRanges.push([badLineStart, i]);
+                badLineStart = undefined;
+            }
+        }
+
+        badLineRanges
+            .reverse()
+            .forEach(([start, end]) =>
+                manifestTextLines.splice(start, end - start + 1),
+            );
+        manifestTextLines.push("");
+        manifestText = manifestTextLines.join("\n");
     } else {
         const DESCRIPTION_BAD_FORMAT = /"description"\s?:\s?".+?",/gs;
 
@@ -66,7 +93,6 @@ async function parseTextManifest(jarFile: JSZipObject, isForgeLike: boolean) {
             "",
         );
     }
-
     return manifestText;
 }
 
