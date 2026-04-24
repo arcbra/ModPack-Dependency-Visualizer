@@ -64,6 +64,8 @@ You can always press **_Ctrl + Z_** to undo your changes, either adding or delet
 
 ![](/showcase/edit_mode.gif)
 
+Also you can now **save your graphs on a JSON file**. This can be done clicking on the new download icon right next to the total nodes count. You can then **load the JSON file by dropping it onto the dropzone** on the main page, just like a JAR file.
+
 ## Roadmap
 
 - [x] Base release.
@@ -72,7 +74,7 @@ You can always press **_Ctrl + Z_** to undo your changes, either adding or delet
 - [x] Search the mods on CurseForge / Modrinth from the nodes.
 - [x] Edit mode for connecting nodes manually and modify relations.
 - [x] Ability to undo changes on edit mode, either adding an arrow or removing one.
-- [ ] Add an option to save the graph as a file and load it later.
+- [x] Add an option to save the graph as a file and load it later.
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
 
