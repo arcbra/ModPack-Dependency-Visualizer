@@ -403,10 +403,7 @@ submitBtn.addEventListener("click", async () => {
 
     localStorage.setItem("jarErrors", JSON.stringify(jarErrors));
     localStorage.setItem("modsRelation", JSON.stringify(modsRelation));
-    localStorage.setItem(
-        "lastJarCount",
-        JSON.stringify(allFiles.length),
-    );
+    localStorage.setItem("lastLoadSource", JSON.stringify("jar"));
 
     window.location.href = "graph.html";
 });

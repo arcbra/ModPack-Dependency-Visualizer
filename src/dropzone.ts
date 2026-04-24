@@ -1,16 +1,6 @@
-const dropZone = document.getElementById("drop-zone") as HTMLLabelElement;
+import { showJsonError } from "./notifications.ts";
 
-/**
- * Shows error notification and reloads the page.
- * @param message Error message to display.
- */
-export function showJsonError(message: string): void {
-    const el = document.createElement("div");
-    el.className = "notification error";
-    el.textContent = message;
-    document.getElementById("notifications")!.appendChild(el);
-    setTimeout(() => window.location.reload(), 2000);
-}
+const dropZone = document.getElementById("drop-zone") as HTMLLabelElement;
 
 /**
  * Processes a JSON file, validates it, saves to localStorage and redirects.
@@ -25,10 +15,11 @@ export function processJsonFile(file: File): void {
                 throw new Error("Invalid graph JSON structure");
             }
             localStorage.setItem("importedGraph", JSON.stringify(data));
+                    localStorage.setItem("lastLoadSource", JSON.stringify("json"));
             localStorage.removeItem("modsRelation");
             window.location.href = "graph.html";
         } catch {
-            showJsonError("Error loading JSON: file is corrupted or malformed.");
+            showJsonError("Error loading JSON: file is corrupted or has bad formatting.");
         }
     };
     reader.readAsText(file);

@@ -1,4 +1,6 @@
 import "./legend.ts";
+import "./notifications.ts";
+import { notify } from "./notifications.ts";
 import { Network, DataSet, type Edge } from "vis-network/standalone";
 
 // Interfaces
@@ -9,6 +11,7 @@ interface GroupAttributes {
 
 interface NetworkAttributes {
     id: string;
+    label?: string;
     class?: string;
     color: {
         background?: string;
@@ -32,22 +35,6 @@ let nodesArray: Record<string, any>[] = JSON.parse(
 );
 let edgesRaw: Edge[] = JSON.parse(localStorage.getItem("lastEdgesRaw") ?? "[]");
 
-// Notify errors
-/**
- * Notify on screen if some mod wasn't read correctly.
- * @param message Message to display.
- * @param type Type of notification (color choice). Typically error.
- * @param duration Duration of the notification on screen.
- */
-function notify(message: string, type = "error", duration = 10000) {
-    const notificationsContainer = document.getElementById("notifications")!;
-    const el = document.createElement("div");
-    el.className = `notification ${type}`;
-    el.textContent = message;
-    notificationsContainer.appendChild(el);
-    setTimeout(() => el.remove(), duration);
-}
-
 const jarErrors: string[] = JSON.parse(
     localStorage.getItem("jarErrors") ?? "[]",
 );
@@ -70,19 +57,15 @@ const modsRelation: Record<string, string[]> = JSON.parse(
 const importedGraph = JSON.parse(
     localStorage.getItem("importedGraph") ?? "null",
 );
-const lastJarCount = JSON.parse(
-    localStorage.getItem("lastJarCount") ?? "null",
+const lastLoadSource = JSON.parse(
+    localStorage.getItem("lastLoadSource") ?? "null",
 );
 
-// Discard imported graph if JARs were uploaded after it (node count mismatch)
-const shouldDiscardImportedGraph =
-    importedGraph &&
-    lastJarCount !== null &&
-    importedGraph.nodes.length !== lastJarCount;
+// Discard imported graph if last load was from JARs (not JSON)
+const shouldDiscardImportedGraph = lastLoadSource === "jar";
 
 if (shouldDiscardImportedGraph) {
     localStorage.removeItem("importedGraph");
-    localStorage.removeItem("lastJarCount");
 }
 
 // If importing a JSON file, load directly from it
@@ -513,8 +496,19 @@ window.addEventListener("beforeunload", () => {
     );
     localStorage.setItem("lastEdgesRaw", JSON.stringify(edgesRaw));
 
-    // Persist imported graph if loaded from JSON
-    if (importedGraph) {
-        localStorage.setItem("importedGraph", JSON.stringify(importedGraph));
+    // Persist imported graph if loaded from JSON, with updated node states
+    if (importedGraph && !shouldDiscardImportedGraph) {
+        const updatedNodes = lastNodesData(nodes).map((n: NetworkAttributes) => ({
+            id: n.id,
+            label: n.label,
+            group: n.class,
+            checked: n.checked,
+            color: n.color.originalBackground,
+        }));
+        const updatedGraph = {
+            nodes: updatedNodes,
+            edges: edgesRaw.map((e: Edge) => ({ from: e.from, to: e.to })),
+        };
+        localStorage.setItem("importedGraph", JSON.stringify(updatedGraph));
     }
 });
