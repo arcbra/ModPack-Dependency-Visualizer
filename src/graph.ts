@@ -360,6 +360,35 @@ nodeCountElem.appendChild(
     document.createTextNode(`Total Nodes: ${nodes.length}`),
 );
 
+// Download button
+const downloadBtn = document.getElementById("download-btn") as HTMLButtonElement;
+downloadBtn.addEventListener("click", () => {
+    const graphData = {
+        version: 1,
+        nodes: nodesArray.map((node: Record<string, any>) => ({
+            id: node.id,
+            label: node.label,
+            group: node.class,
+            checked: node.checked,
+            color: node.color.originalBackground,
+        })),
+        edges: edgesRaw.map((edge) => ({
+            from: edge.from,
+            to: edge.to,
+        })),
+    };
+
+    const blob = new Blob([JSON.stringify(graphData, null, 2)], {
+        type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "graph_data.json";
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
 // Choose search engine
 let searchInCurseForge = JSON.parse(
     localStorage.getItem("lastSearchInCurseForge") ?? "true",
