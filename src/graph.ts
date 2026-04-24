@@ -67,9 +67,29 @@ const orphanClasses = new Set(Object.keys(groupAttributes).slice(-2));
 const modsRelation: Record<string, string[]> = JSON.parse(
     localStorage.getItem("modsRelation") ?? "[]",
 );
-const uniqueModsLoaded = new Set(
-    Object.entries(modsRelation).flat(2),
-) as Set<string>;
+const importedGraph = JSON.parse(
+    localStorage.getItem("importedGraph") ?? "null",
+);
+const lastJarCount = JSON.parse(
+    localStorage.getItem("lastJarCount") ?? "null",
+);
+
+// Discard imported graph if JARs were uploaded after it (node count mismatch)
+const shouldDiscardImportedGraph =
+    importedGraph &&
+    lastJarCount !== null &&
+    importedGraph.nodes.length !== lastJarCount;
+
+if (shouldDiscardImportedGraph) {
+    localStorage.removeItem("importedGraph");
+    localStorage.removeItem("lastJarCount");
+}
+
+// If importing a JSON file, load directly from it
+const uniqueModsLoaded: Set<string> =
+    importedGraph && !shouldDiscardImportedGraph
+        ? new Set(importedGraph.nodes.map((n: any) => n.id))
+        : new Set(Object.entries(modsRelation).flat(2));
 const modsLastLoaded = new Set(
     nodesArray.map((mod: Record<string, string>) => mod.id),
 ) as Set<string>;
@@ -77,7 +97,7 @@ const modsLastLoaded = new Set(
 /**
  * Checks if it's the first time loading the current mods.
  * @param set1 A Set of mods, could be the current or previous load.
- * @param set2 A Set of mods, could be the current or previous load.
+ * @param set2 A Set of mods, could be the previous load.
  * @returns True if some mod is not on the previous load. False otherwise.
  */
 function checkPageFirstLoad(set1: Set<string>, set2: Set<string>) {
@@ -87,7 +107,33 @@ function checkPageFirstLoad(set1: Set<string>, set2: Set<string>) {
 
 const isPageFirstLoad = checkPageFirstLoad(uniqueModsLoaded, modsLastLoaded);
 
-if (isPageFirstLoad) {
+const shouldLoadImportedGraph = importedGraph && !shouldDiscardImportedGraph;
+
+if (shouldLoadImportedGraph) {
+    notify("Loaded graph from JSON file.", "info", 5000);
+
+    edgesRaw = importedGraph.edges.map((e: any) => ({ from: e.from, to: e.to }));
+    nodesArray = importedGraph.nodes.map((node: any) => {
+        const isOrphan = orphanClasses.has(node.group);
+        const backgroundColor = node.checked
+            ? isOrphan
+                ? groupAttributes.checkedOrphan.color
+                : groupAttributes.addon.color
+            : node.color;
+
+        return {
+            id: node.id,
+            label: node.label,
+            checked: node.checked ?? false,
+            color: {
+                background: backgroundColor,
+                border: "#181825",
+                originalBackground: node.color,
+            },
+            class: node.group,
+        };
+    });
+} else if (isPageFirstLoad) {
     notify(
         "Doble click a node to mark as an Addon or a Checked orphan.",
         "info",
@@ -466,4 +512,9 @@ window.addEventListener("beforeunload", () => {
         JSON.stringify(lastNodesData(nodes)),
     );
     localStorage.setItem("lastEdgesRaw", JSON.stringify(edgesRaw));
+
+    // Persist imported graph if loaded from JSON
+    if (importedGraph) {
+        localStorage.setItem("importedGraph", JSON.stringify(importedGraph));
+    }
 });

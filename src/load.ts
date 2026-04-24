@@ -1,9 +1,11 @@
 import "./dropzone";
+import { processJsonFile } from "./dropzone";
 import { defaultDependenciesJSON } from "./defaultDependencies.json";
 import JSZip, { type JSZipObject } from "jszip";
 import * as TOML from "toml";
 import progressBar from "progressbar.js";
 import type Line from "progressbar.js/line";
+
 
 // Mods basic data
 const defaultDependencies = new Set(defaultDependenciesJSON);
@@ -313,9 +315,18 @@ document.addEventListener("files-dropped", (e) => {
     // );
 });
 
-fileInput.addEventListener("change", () =>
-    updateFileList(fileInput.files as FileList),
-);
+fileInput.addEventListener("change", () => {
+    const files = fileInput.files!;
+
+    // Check if a JSON file was selected
+    const jsonFile = Array.from(files).find((f) => f.name.endsWith(".json"));
+    if (jsonFile) {
+        processJsonFile(jsonFile);
+        return;
+    }
+
+    updateFileList(files);
+});
 
 //// Buttons
 clearBtn.addEventListener("click", () => {
@@ -392,6 +403,10 @@ submitBtn.addEventListener("click", async () => {
 
     localStorage.setItem("jarErrors", JSON.stringify(jarErrors));
     localStorage.setItem("modsRelation", JSON.stringify(modsRelation));
+    localStorage.setItem(
+        "lastJarCount",
+        JSON.stringify(allFiles.length),
+    );
 
     window.location.href = "graph.html";
 });
