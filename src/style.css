@@ -34,8 +34,11 @@ a:hover {
 body {
     margin: 0;
     overflow-y: auto;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-width: 320px;
+    min-height: 100vh;
     font-family: "Mojangles";
 }
 
@@ -48,6 +51,7 @@ h1 {
 }
 
 .container {
+    display: grid;
     width: 75vw;
     margin-top: 1vh;
     min-height: 94vh;
